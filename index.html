@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SubShift - fix out-of-sync subtitles in your browser</title>
+<meta name="description" content="Free browser subtitle toolbox: shift timings, stretch for framerate mismatch, convert SRT to WebVTT and back. No uploads, no sign-up.">
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--line:#30363d;--fg:#e6edf3;--dim:#8b949e;--acc:#58a6ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+header.hero{padding:70px 0 40px;text-align:center}
+h1{font-size:44px;margin:0 0 10px}
+h1 span{color:var(--acc)}
+.tag{font-size:18px;color:var(--dim);max-width:620px;margin:0 auto 26px}
+a.btn{display:inline-block;background:var(--acc);color:#0b1c2e;font-weight:700;padding:13px 30px;border-radius:10px;text-decoration:none;font-size:16px}
+a.btn:hover{filter:brightness(1.1)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:36px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.card h3{margin:0 0 6px;font-size:16px}
+.card p{margin:0;color:var(--dim);font-size:14px}
+.sec{padding:26px 0}
+.sec h2{font-size:24px;margin:0 0 10px}
+.sec p,ul{color:var(--dim)}
+li{margin:4px 0}
+code{background:#0b0f14;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:13px}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:20px 0;color:var(--dim);font-size:13px;text-align:center}
+footer a{color:var(--acc);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <h1>Sub<span>Shift</span></h1>
+  <p class="tag">The movie's two seconds early and the subtitles are two seconds late. Drag the file in, nudge every cue at once, stretch for a framerate mismatch, and download the fixed file.</p>
+  <a class="btn" href="app.html">Open SubShift</a>
+</header>
+<div class="grid">
+  <div class="card"><h3>Shift everything at once</h3><p>One millisecond offset applied to every cue. No more line-by-line editing because the release doesn't match.</p></div>
+  <div class="card"><h3>Framerate stretch</h3><p>Subtitles drift further as the film goes on? That's a 25 fps vs 23.976 mismatch. One ratio fixes the whole timeline.</p></div>
+  <div class="card"><h3>SRT &lt;-&gt; WebVTT</h3><p>Convert between formats, keeping identifiers, cue settings and multi-line text intact.</p></div>
+  <div class="card"><h3>Nothing uploads</h3><p>Parsing and fixing happen in your browser. The file never leaves your machine.</p></div>
+</div>
+<section class="sec">
+  <h2>What it catches</h2>
+  <ul>
+    <li>Malformed blocks and broken timecodes get flagged instead of silently dropped</li>
+    <li>Zero-duration and out-of-order cues get a warning</li>
+    <li>Overlapping cues are counted after every shift or stretch</li>
+    <li>Sloppy inputs (2-digit fractions, CRLF files, VTT comment blocks) parse the way players do</li>
+  </ul>
+</section>
+<section class="sec">
+  <h2>Checked by an independent parser</h2>
+  <p>The shared engine (<code>engine.js</code>) runs in Node against a corpus decoded by a completely separate Python SRT/VTT parser (<code>tests/build_corpus.py</code>). Both must agree on every cue time, every shift, every stretch and every converted file. 64 checks pass (<code>node tests/run_tests.js</code>).</p>
+</section>
+<footer>Built in the open by the app factory. <a href="https://github.com/iLanis-agent/subshift">Source on GitHub</a> - <a href="app.html">open the app</a></footer>
+</div>
+</body>
+</html>
